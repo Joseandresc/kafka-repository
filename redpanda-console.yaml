@@ -1,0 +1,312 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: '2025-06-25T06:18:24Z'
+    generateName: redpanda-console-97fb8587c-
+    labels:
+      app: redpanda-console
+      pod-template-hash: 97fb8587c
+    name: redpanda-console-97fb8587c-7hwqr
+    namespace: kafka
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: redpanda-console-97fb8587c
+      uid: 0db99f99-92e6-4607-978f-23178ff54a14
+    resourceVersion: '503657'
+    uid: 862f3b8f-3b26-4c93-81b0-013f99390de7
+  spec:
+    containers:
+    - env:
+      - name: KAFKA_BROKERS
+        value: kafka1:9092
+      - name: SCHEMA_REGISTRY
+        value: "[{\n  \"url\": \"http://kafka-schema-registry:8081\"\n}]\n"
+      image: docker.redpanda.com/redpandadata/console:latest
+      imagePullPolicy: Always
+      name: redpanda-console
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fprdh
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: aks-kafkapool-21228749-vmss000003
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-fprdh
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: '2025-08-25T22:40:22Z'
+      status: 'True'
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: '2025-08-25T22:39:54Z'
+      status: 'True'
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: '2025-08-25T22:41:42Z'
+      status: 'True'
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: '2025-08-25T22:41:42Z'
+      status: 'True'
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: '2025-08-25T22:39:53Z'
+      status: 'True'
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://ff6851d1b3a855f248b7b31fe92d4e26a81f35efc98b3ff59f983867f28dddb8
+      image: docker.redpanda.com/redpandadata/console:latest
+      imageID: docker.redpanda.com/redpandadata/console@sha256:965c71f4e216d554cb71e7e19d85088b9e7c315077d0ea8d5f726511b4aeffc7
+      lastState:
+        terminated:
+          containerID: containerd://d692a6cbc8ed4ab58bbaf8f9b0cd910191a92dcfadd0497574c34cea98d2747f
+          exitCode: 1
+          finishedAt: '2025-08-25T22:41:25Z'
+          reason: Error
+          startedAt: '2025-08-25T22:40:22Z'
+      name: redpanda-console
+      ready: true
+      restartCount: 1
+      started: true
+      state:
+        running:
+          startedAt: '2025-08-25T22:41:42Z'
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fprdh
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.224.0.5
+    hostIPs:
+    - ip: 10.224.0.5
+    phase: Running
+    podIP: 10.244.0.219
+    podIPs:
+    - ip: 10.244.0.219
+    qosClass: BestEffort
+    startTime: '2025-08-25T22:39:54Z'
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: '1'
+      deployment.kubernetes.io/max-replicas: '2'
+      deployment.kubernetes.io/revision: '2'
+    creationTimestamp: '2025-06-24T22:30:00Z'
+    generation: 2
+    labels:
+      app: redpanda-console
+      pod-template-hash: 75d948d847
+    name: redpanda-console-75d948d847
+    namespace: kafka
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: redpanda-console
+      uid: cd0d2a00-4244-4fa8-9d25-616d30ddc98c
+    resourceVersion: '358254'
+    uid: f30e35a4-1353-45aa-9cdb-bd1f3bbd3dec
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: redpanda-console
+        pod-template-hash: 75d948d847
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: redpanda-console
+          pod-template-hash: 75d948d847
+      spec:
+        containers:
+        - env:
+          - name: KAFKA_BROKERS
+            value: kafka1:9092
+          - name: SCHEMA_REGISTRY_URLS
+            value: http://kafka-schema-registry:8081
+          image: docker.redpanda.com/redpandadata/console:latest
+          imagePullPolicy: Always
+          name: redpanda-console
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: '1'
+      deployment.kubernetes.io/max-replicas: '2'
+      deployment.kubernetes.io/revision: '3'
+    creationTimestamp: '2025-06-24T22:32:58Z'
+    generation: 1
+    labels:
+      app: redpanda-console
+      pod-template-hash: 97fb8587c
+    name: redpanda-console-97fb8587c
+    namespace: kafka
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: redpanda-console
+      uid: cd0d2a00-4244-4fa8-9d25-616d30ddc98c
+    resourceVersion: '503660'
+    uid: 0db99f99-92e6-4607-978f-23178ff54a14
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: redpanda-console
+        pod-template-hash: 97fb8587c
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: redpanda-console
+          pod-template-hash: 97fb8587c
+      spec:
+        containers:
+        - env:
+          - name: KAFKA_BROKERS
+            value: kafka1:9092
+          - name: SCHEMA_REGISTRY
+            value: "[{\n  \"url\": \"http://kafka-schema-registry:8081\"\n}]\n"
+          image: docker.redpanda.com/redpandadata/console:latest
+          imagePullPolicy: Always
+          name: redpanda-console
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: '1'
+      deployment.kubernetes.io/max-replicas: '2'
+      deployment.kubernetes.io/revision: '1'
+    creationTimestamp: '2025-06-24T22:26:33Z'
+    generation: 2
+    labels:
+      app: redpanda-console
+      pod-template-hash: dccb6d779
+    name: redpanda-console-dccb6d779
+    namespace: kafka
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: redpanda-console
+      uid: cd0d2a00-4244-4fa8-9d25-616d30ddc98c
+    resourceVersion: '357248'
+    uid: ccd65724-445d-47c7-b3a1-75662558fb72
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: redpanda-console
+        pod-template-hash: dccb6d779
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: redpanda-console
+          pod-template-hash: dccb6d779
+      spec:
+        containers:
+        - env:
+          - name: KAFKA_BROKERS
+            value: kafka1:9092
+          image: docker.redpanda.com/redpandadata/console:latest
+          imagePullPolicy: Always
+          name: redpanda-console
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
