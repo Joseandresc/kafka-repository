@@ -1,198 +1,48 @@
-apiVersion: v1
-items:
-- apiVersion: v1
-  kind: Pod
-  metadata:
-    creationTimestamp: '2025-06-25T06:18:23Z'
-    generateName: kafka-schema-registry-6cf6b5d779-
-    labels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-schema-registry
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
       app: kafka-schema-registry
-      pod-template-hash: 6cf6b5d779
-    name: kafka-schema-registry-6cf6b5d779-vkkgz
-    namespace: kafka
-    ownerReferences:
-    - apiVersion: apps/v1
-      blockOwnerDeletion: true
-      controller: true
-      kind: ReplicaSet
-      name: kafka-schema-registry-6cf6b5d779
-      uid: 48296b42-a1a5-479e-9a57-8c734aa897ab
-    resourceVersion: '503640'
-    uid: d7e3b22f-0f11-4a0e-a369-acd16e7d7adf
-  spec:
-    containers:
-    - env:
-      - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
-        value: PLAINTEXT://kafka1:9092
-      - name: SCHEMA_REGISTRY_HOST_NAME
-        value: kafka-schema-registry
-      - name: SCHEMA_REGISTRY_LISTENERS
-        value: http://0.0.0.0:8081
-      image: confluentinc/cp-schema-registry:7.8.0
-      imagePullPolicy: IfNotPresent
-      name: kafka-schema-registry
-      ports:
-      - containerPort: 8081
-        protocol: TCP
-      resources: {}
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-      volumeMounts:
-      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-hk6vk
-        readOnly: true
-    dnsPolicy: ClusterFirst
-    enableServiceLinks: true
-    nodeName: aks-kafkapool-21228749-vmss000003
-    nodeSelector:
-      agentpool: kafkapool
-    preemptionPolicy: PreemptLowerPriority
-    priority: 0
-    restartPolicy: Always
-    schedulerName: default-scheduler
-    securityContext: {}
-    serviceAccount: default
-    serviceAccountName: default
-    terminationGracePeriodSeconds: 30
-    tolerations:
-    - effect: NoExecute
-      key: node.kubernetes.io/not-ready
-      operator: Exists
-      tolerationSeconds: 300
-    - effect: NoExecute
-      key: node.kubernetes.io/unreachable
-      operator: Exists
-      tolerationSeconds: 300
-    volumes:
-    - name: kube-api-access-hk6vk
-      projected:
-        defaultMode: 420
-        sources:
-        - serviceAccountToken:
-            expirationSeconds: 3607
-            path: token
-        - configMap:
-            items:
-            - key: ca.crt
-              path: ca.crt
-            name: kube-root-ca.crt
-        - downwardAPI:
-            items:
-            - fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
-              path: namespace
-  status:
-    conditions:
-    - lastProbeTime: null
-      lastTransitionTime: '2025-08-25T22:41:41Z'
-      status: 'True'
-      type: PodReadyToStartContainers
-    - lastProbeTime: null
-      lastTransitionTime: '2025-08-25T22:39:43Z'
-      status: 'True'
-      type: Initialized
-    - lastProbeTime: null
-      lastTransitionTime: '2025-08-25T22:41:41Z'
-      status: 'True'
-      type: Ready
-    - lastProbeTime: null
-      lastTransitionTime: '2025-08-25T22:41:41Z'
-      status: 'True'
-      type: ContainersReady
-    - lastProbeTime: null
-      lastTransitionTime: '2025-08-25T22:39:43Z'
-      status: 'True'
-      type: PodScheduled
-    containerStatuses:
-    - containerID: containerd://a9de35061211d34958d961c89046b44fe3116c54fab2ab9bc45b49d7a8d5a2c2
-      image: docker.io/confluentinc/cp-schema-registry:7.8.0
-      imageID: docker.io/confluentinc/cp-schema-registry@sha256:ae0695b092314be82fe32058c276d99224855090a77ec169423cf82e02d5e3ac
-      lastState: {}
-      name: kafka-schema-registry
-      ready: true
-      restartCount: 0
-      started: true
-      state:
-        running:
-          startedAt: '2025-08-25T22:41:40Z'
-      volumeMounts:
-      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-hk6vk
-        readOnly: true
-        recursiveReadOnly: Disabled
-    hostIP: 10.224.0.5
-    hostIPs:
-    - ip: 10.224.0.5
-    phase: Running
-    podIP: 10.244.0.142
-    podIPs:
-    - ip: 10.244.0.142
-    qosClass: BestEffort
-    startTime: '2025-08-25T22:39:43Z'
-- apiVersion: apps/v1
-  kind: ReplicaSet
-  metadata:
-    annotations:
-      deployment.kubernetes.io/desired-replicas: '1'
-      deployment.kubernetes.io/max-replicas: '2'
-      deployment.kubernetes.io/revision: '1'
-    creationTimestamp: '2025-06-24T22:02:41Z'
-    generation: 1
-    labels:
-      app: kafka-schema-registry
-      pod-template-hash: 6cf6b5d779
-    name: kafka-schema-registry-6cf6b5d779
-    namespace: kafka
-    ownerReferences:
-    - apiVersion: apps/v1
-      blockOwnerDeletion: true
-      controller: true
-      kind: Deployment
-      name: kafka-schema-registry
-      uid: 174c98de-d7cb-43d2-aa98-4da120fb3e3e
-    resourceVersion: '503643'
-    uid: 48296b42-a1a5-479e-9a57-8c734aa897ab
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
+  template:
+    metadata:
+      labels:
         app: kafka-schema-registry
-        pod-template-hash: 6cf6b5d779
-    template:
-      metadata:
-        creationTimestamp: null
-        labels:
-          app: kafka-schema-registry
-          pod-template-hash: 6cf6b5d779
-      spec:
-        containers:
-        - env:
-          - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
-            value: PLAINTEXT://kafka1:9092
-          - name: SCHEMA_REGISTRY_HOST_NAME
-            value: kafka-schema-registry
-          - name: SCHEMA_REGISTRY_LISTENERS
-            value: http://0.0.0.0:8081
-          image: confluentinc/cp-schema-registry:7.8.0
-          imagePullPolicy: IfNotPresent
-          name: kafka-schema-registry
-          ports:
-          - containerPort: 8081
-            protocol: TCP
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-        dnsPolicy: ClusterFirst
-        nodeSelector:
-          agentpool: kafkapool
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-  status:
-    availableReplicas: 1
-    fullyLabeledReplicas: 1
-    observedGeneration: 1
-    readyReplicas: 1
-    replicas: 1
+    spec:
+      containers:
+      - name: kafka-schema-registry
+        image: confluentinc/cp-schema-registry:7.8.0
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
+          value: PLAINTEXT://kafka1:9092
+        - name: SCHEMA_REGISTRY_HOST_NAME
+          value: kafka-schema-registry
+        - name: SCHEMA_REGISTRY_LISTENERS
+          value: http://0.0.0.0:8081
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+        readinessProbe:
+          httpGet:
+            path: /subjects
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /subjects
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 30
+      nodeSelector:
+        agentpool: kafkapool
